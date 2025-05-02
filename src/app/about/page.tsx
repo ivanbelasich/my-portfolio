@@ -1,62 +1,67 @@
 'use client'
 
 import { motion } from 'motion/react'
+import i18next from '../../i18n'
 
 export default function About() {
-    return (
-        <div className="min-h-screen bg-gray-50 py-16 px-4">
-            <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="max-w-4xl mx-auto"
-            >
-                <h1 className="text-4xl font-bold mb-8 text-center text-gray-900">Sobre Mí</h1>
+  const professionalExperience = [
+    {
+      company: 'GranMenú',
+      role: i18next.t('about.granmenu.role'),
+      period: i18next.t('about.granmenu.period'),
+      description: i18next.t('about.granmenu.description')
+    },
+    {
+      company: 'Bigger',
+      role: i18next.t('about.bigger.role'),
+      period: i18next.t('about.bigger.period'),
+      description: i18next.t('about.bigger.description')
+    }
+  ]
 
-                <div className="bg-white shadow-lg rounded-lg p-8">
-                    <p className="text-lg text-gray-700 mb-4">
-                        Soy un Desarrollador de Software con más de 2 años de experiencia, especializado en frontend y con sólidos conocimientos en backend.
-                        Mi pasión se centra en el desarrollo de aplicaciones web y móviles, con un enfoque particular en tecnologías Fintech y blockchain.
-                    </p>
+  return (
+    <div className="container mx-auto px-4 py-16">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="max-w-4xl mx-auto"
+      >
+        <h2 className="text-5xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+          {i18next.t('about.title')}
+        </h2>
 
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <h2 className="text-2xl font-semibold mb-4 text-blue-600">Experiencia Profesional</h2>
-                            <ul className="space-y-4">
-                                <li>
-                                    <h3 className="font-bold">GranMenú - Frontend Developer</h3>
-                                    <p className="text-sm text-gray-600">Feb 2025 - Actualidad</p>
-                                    <p className="text-sm">Lideré migración de proyecto, modernizé UX/UI y implementé nuevas funcionalidades.</p>
-                                </li>
-                                <li>
-                                    <h3 className="font-bold">Bigger - Frontend Developer</h3>
-                                    <p className="text-sm text-gray-600">Dic 2023 - Dic 2024</p>
-                                    <p className="text-sm">Desarrollé billetera digital white-label y panel de administración para PlanetPay.</p>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h2 className="text-2xl font-semibold mb-4 text-blue-600">Habilidades Técnicas</h2>
-                            <div className="flex flex-wrap gap-2">
-                                {[
-                                    'React', 'React Native', 'TypeScript', 'Tailwind CSS',
-                                    'Node.js', 'NestJS', 'PostgreSQL',
-                                    'Docker', 'GitHub Actions',
-                                    'Jest', 'Cypress'
-                                ].map((skill) => (
-                                    <span
-                                        key={skill}
-                                        className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
-                                    >
-                                        {skill}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </motion.div>
+        <div className="text-center mb-12">
+          <p className="text-xl text-gray-300 leading-relaxed">
+            {i18next.t('about.description')}
+          </p>
         </div>
-    )
+
+        <div className="space-y-8">
+          <h3 className="text-3xl font-semibold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+            {i18next.t('about.experience.title')}
+          </h3>
+
+          {professionalExperience.map((exp, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              className="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-2xl"
+            >
+              <div className="flex justify-between items-center mb-4">
+                <h4 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+                  {exp.company}
+                </h4>
+                <span className="text-sm text-gray-400">{exp.period}</span>
+              </div>
+              <p className="text-lg text-gray-300 font-medium">{exp.role}</p>
+              <p className="text-gray-400 mt-2">{exp.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  )
 }

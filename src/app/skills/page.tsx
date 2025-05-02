@@ -1,54 +1,53 @@
 'use client'
 
 import { motion } from 'motion/react'
-
-const skillCategories = [
-  {
-    category: 'Frontend',
-    skills: ['React', 'React Native', 'TypeScript', 'Tailwind CSS', 'Zustand']
-  },
-  {
-    category: 'Backend',
-    skills: ['Node.js', 'NestJS', 'Express.js', 'PostgreSQL']
-  },
-  {
-    category: 'DevOps & Tools',
-    skills: ['Docker', 'GitHub Actions', 'Snyk', 'Git', 'Postman']
-  },
-  {
-    category: 'Testing',
-    skills: ['Jest', 'Cypress', 'React Testing Library']
-  },
-  {
-    category: 'Blockchain',
-    skills: ['Stellar']
-  }
-]
+import i18next from '../../i18n'
 
 export default function Skills() {
+  const skillCategories = [
+    {
+      category: i18next.t('skills.frontend.category'),
+      skills: i18next.t('skills.frontend.skills', { returnObjects: true })
+    },
+    {
+      category: i18next.t('skills.backend.category'),
+      skills: i18next.t('skills.backend.skills', { returnObjects: true })
+    },
+    {
+      category: i18next.t('skills.devops.category'),
+      skills: i18next.t('skills.devops.skills', { returnObjects: true })
+    }
+  ]
+
   return (
-    <div className="min-h-screen bg-gray-50 py-16 px-4">
+    <div className="container mx-auto px-4 py-16">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="max-w-4xl mx-auto"
       >
-        <h1 className="text-4xl font-bold mb-12 text-center text-gray-900">Mis Habilidades</h1>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <h2 className="text-5xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+          {i18next.t('skills.title')}
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-8">
           {skillCategories.map((category, index) => (
             <motion.div
               key={index}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-all duration-300"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              className="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-2xl"
             >
-              <h2 className="text-2xl font-semibold mb-4 text-blue-600">{category.category}</h2>
-              <div className="flex flex-wrap gap-2">
-                {category.skills.map((skill) => (
-                  <span 
-                    key={skill} 
-                    className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+              <h3 className="text-2xl font-semibold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+                {category.category}
+              </h3>
+
+              <div className="flex flex-wrap justify-center gap-3">
+                {category.skills.map((skill, skillIndex) => (
+                  <span
+                    key={skillIndex}
+                    className="bg-gray-700 text-gray-300 px-4 py-2 rounded-full text-sm"
                   >
                     {skill}
                   </span>
@@ -57,17 +56,6 @@ export default function Skills() {
             </motion.div>
           ))}
         </div>
-        
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="mt-12 text-center"
-        >
-          <p className="text-gray-700 text-lg">
-            Además, trabajo bajo metodologías ágiles como Scrum y aplico principios de Clean Architecture y SOLID.
-          </p>
-        </motion.div>
       </motion.div>
     </div>
   )
