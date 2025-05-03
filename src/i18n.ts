@@ -20,35 +20,36 @@ i18next.init({
           description: "Desarrollador de Software con más de 2 años de experiencia, especializado en frontend y con sólidos conocimientos en backend. Mi pasión se centra en el desarrollo de aplicaciones web y móviles, con un enfoque particular en tecnologías Fintech y blockchain.",
           granmenu: {
             role: "Frontend Developer",
-            period: "Enero 2023 - Actualidad",
+            period: "Febrero 2025 - Actualidad",
             description: "Desarrollo de aplicaciones web modernas utilizando React, TypeScript y tecnologías de vanguardia."
           },
           bigger: {
             role: "Desarrollador de Software",
-            period: "Abril 2023 - Julio 2023",
+            period: "Abril 2023 - Diciembre 2024",
             description: "Implementación de soluciones fintech con énfasis en blockchain y aplicaciones móviles."
           }
         },
         projects: {
-          title: "Mis Proyectos Destacados",
+          title: "Proyectos destacados",
+          demo: "Demo",
+          code: "Código",
+          achievements: "Logros clave:",
           projects: [
             {
               name: "LongX",
               company: "GranMenú",
               description: "Migré el proyecto de Create React App a Vite, mejorando rendimiento y escalabilidad.",
               technologies: ["React", "Vite", "TypeScript", "Websockets"],
-              period: "Enero 2023 - Marzo 2023"
+              period: "Febrero 2025 - Actualidad"
             },
             {
               name: "PlanetPay Wallet",
               company: "Bigger",
               description: "Billetera digital white-label con funcionalidades de swaps, pagos y autenticación segura.",
               technologies: ["React", "AWS Cognito", "Stripe", "TypeScript"],
-              period: "Abril 2023 - Julio 2023"
+              period: "Abril 2023 - Diciembre 2024"
             }
-          ],
-          demo: "Demo",
-          code: "Código"
+          ]
         },
         skills: {
           title: "Mis Habilidades",
@@ -97,35 +98,36 @@ i18next.init({
           description: "Software Developer with over 2 years of experience, specialized in frontend and with solid backend knowledge. My passion focuses on web and mobile application development, with a particular emphasis on Fintech and blockchain technologies.",
           granmenu: {
             role: "Frontend Developer",
-            period: "January 2023 - Present",
+            period: "February 2025 - Present",
             description: "Development of modern web applications using React, TypeScript, and cutting-edge technologies."
           },
           bigger: {
             role: "Software Developer",
-            period: "April 2023 - July 2023",
+            period: "April 2023 - December 2024",
             description: "Implementation of fintech solutions with emphasis on blockchain and mobile applications."
           }
         },
         projects: {
-          title: "My Projects",
+          title: "Principal Projects",
+          demo: "Demo",
+          code: "Code",
+          achievements: "Key Achievements:",
           projects: [
             {
               name: "LongX",
               company: "GranMenú",
               description: "I migrated the Create React App project to Vite, improving performance and scalability.",
               technologies: ["React", "Vite", "TypeScript", "Websockets"],
-              period: "January 2023 - March 2023"
+              period: "February 2025 - March 2025"
             },
             {
               name: "PlanetPay Wallet",
               company: "Bigger",
               description: "I created a white-label digital wallet with swap, payment, and secure authentication features.",
               technologies: ["React", "AWS Cognito", "Stripe", "TypeScript"],
-              period: "April 2023 - July 2023"
+              period: "April 2023 - December 2024"
             }
-          ],
-          demo: "Demo",
-          code: "Code"
+          ]
         },
         skills: {
           title: "My Skills",

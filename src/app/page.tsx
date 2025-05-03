@@ -117,7 +117,7 @@ export default function Home() {
             className="text-6xl font-extrabold mb-4 
             bg-clip-text text-transparent 
             bg-gradient-to-r from-blue-400 to-purple-600
-            tracking-tight"
+            tracking-tight font-['Poppins']"
           >
             {i18next.t('hero.title')}
           </motion.h1>
@@ -126,7 +126,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="text-3xl mb-8 text-gray-300 font-light"
+            className="text-3xl mb-8 text-gray-300 font-light font-['Inter']"
           >
             {i18next.t('hero.subtitle')}
           </motion.p>
@@ -151,7 +151,8 @@ export default function Home() {
               rounded-full 
               transition-all 
               shadow-xl 
-              hover:shadow-2xl"
+              hover:shadow-2xl
+              font-['Inter']"
             >
               {i18next.t('hero.aboutMe')}
             </motion.a>
@@ -171,7 +172,8 @@ export default function Home() {
               rounded-full 
               transition-all 
               shadow-lg 
-              hover:shadow-xl"
+              hover:shadow-xl
+              font-['Inter']"
             >
               {i18next.t('hero.projects')}
             </motion.a>
