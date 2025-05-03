@@ -68,41 +68,53 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    // Prevent default browser validation
     e.currentTarget.setAttribute('novalidate', '')
 
     setIsSubmitting(true)
 
-    if (validateForm()) {
-      try {
-        // Send form data
-        // Reset form after successful submission
+    if (!validateForm()) {
+      setIsSubmitting(false)
+      return
+    }
+
+    try {
+      const formElement = e.currentTarget as HTMLFormElement
+      const formDataToSend = new FormData(formElement)
+
+      // Configuración específica para FormSubmit
+      formDataToSend.append('_captcha', 'false')
+      formDataToSend.append('_template', 'table')
+
+      const response = await fetch(process.env.NEXT_PUBLIC_FORMSUBMIT_URL!, {
+        method: 'POST',
+        body: formDataToSend
+      })
+
+      if (response.ok) {
         setFormData({
           name: '',
           email: '',
           message: ''
         })
 
-        // Show success message
         setErrors(prev => ({
           ...prev,
           form: i18next.language === 'es'
             ? 'Mensaje enviado exitosamente. ¡Gracias por contactarme!'
             : 'Message sent successfully. Thank you for reaching out!'
         }))
-      } catch (error) {
-        // Show error message
-        setErrors(prev => ({
-          ...prev,
-          form: i18next.language === 'es'
-            ? 'Error al enviar el mensaje. Por favor, inténtalo de nuevo.'
-            : 'Error sending message. Please try again.'
-        }))
-      } finally {
-        setIsSubmitting(false)
+      } else {
+        throw new Error('Submission failed')
       }
-    } else {
+    } catch (error) {
+      console.error(error)
+      setErrors(prev => ({
+        ...prev,
+        form: i18next.language === 'es'
+          ? 'Error al enviar el mensaje. Por favor, inténtalo de nuevo.'
+          : 'Error sending message. Please try again.'
+      }))
+    } finally {
       setIsSubmitting(false)
     }
   }
@@ -114,7 +126,6 @@ export default function Contact() {
       [name]: value
     }))
 
-    // Clear specific error when user starts typing
     if (errors[name as keyof typeof errors]) {
       setErrors(prev => ({
         ...prev,
@@ -175,25 +186,20 @@ export default function Contact() {
         </div>
 
         {/* Vertical Divider */}
-        <div className="hidden md:block md:col-span-1 flex items-center justify-center">
+        <div className="md:block md:col-span-1 flex items-center justify-center">
           <div className="w-px h-full bg-gray-700/50"></div>
         </div>
 
         {/* Contact Form Column */}
         <form
-          action="https://formsubmit.co/ca54531ab017d373952b341b2f96c769"
-          method="POST"
           onSubmit={handleSubmit}
           className="md:col-span-2 space-y-6"
         >
-          {/* Campo oculto para el _subject */}
-          <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portfolio!" />
-
-          {/* Campo oculto para evitar spam */}
+          {/* Campos ocultos para FormSubmit */}
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
           <input type="text" name="_honey" style={{ display: 'none' }} />
-
-          {/* Redirección después del envío (opcional) */}
-          <input type="hidden" name="_next" value="https://tudominio.com/gracias" />
+          <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portfolio!" />
 
           {errors.form && (
             <div className={`
@@ -229,7 +235,6 @@ export default function Contact() {
                 transition-all duration-300
               `}
               placeholder={i18next.t('contact.namePlaceholder')}
-
             />
             {errors.name && (
               <p className="text-red-500 text-xs mt-2">{errors.name}</p>
@@ -258,7 +263,6 @@ export default function Contact() {
                 transition-all duration-300
               `}
               placeholder={i18next.t('contact.emailPlaceholder')}
-
             />
             {errors.email && (
               <p className="text-red-500 text-xs mt-2">{errors.email}</p>
@@ -287,7 +291,6 @@ export default function Contact() {
                 transition-all duration-300
               `}
               placeholder={i18next.t('contact.messagePlaceholder')}
-
             />
             {errors.message && (
               <p className="text-red-500 text-xs mt-2">{errors.message}</p>
@@ -299,7 +302,7 @@ export default function Contact() {
             whileTap={{ scale: 0.95 }}
             type="submit"
             disabled={isSubmitting}
-            className={`w-full cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-xl ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+            className={`w-full disabled:from-gray-700 disabled:to-gray-700 disabled:cursor-not-allowed cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-xl ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
               }`}
           >
             {isSubmitting ? (
@@ -308,7 +311,6 @@ export default function Contact() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                {i18next.t('contact.submittingButton')}
               </span>
             ) : (
               i18next.t('contact.submitButton')

@@ -2,9 +2,17 @@
 
 import { motion } from 'framer-motion';
 import i18next from 'i18next';
+import { useEffect, useState } from 'react';
 
 
 export default function Hero() {
+
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
     return (
         <motion.div
             initial="hidden"
@@ -12,7 +20,7 @@ export default function Hero() {
             className={`min-h-screen flex flex-col justify-center items-center relative overflow-hidden`}
         >
             {/* Particle Background */}
-            <motion.div
+            {isClient && <motion.div
                 initial={{ opacity: 0 }}
                 animate={{
                     opacity: [0.1, 0.3, 0.2],
@@ -55,7 +63,7 @@ export default function Hero() {
                         className="absolute w-2 h-2 bg-white/20 rounded-full"
                     />
                 ))}
-            </motion.div>
+            </motion.div>}
 
             {/* Gradient Overlay */}
             <motion.div
