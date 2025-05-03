@@ -3,8 +3,16 @@
 import { motion } from 'motion/react'
 import i18next from '../../i18n'
 
+interface Project {
+  name: string;
+  company: string;
+  period: string;
+  description: string;
+  technologies: string[];
+}
+
 export default function Projects() {
-  const projectsData = i18next.t('projects.projects', { returnObjects: true })
+  const projectsData = i18next.t('projects.projects', { returnObjects: true }) as Project[]
 
   return (
     <div className="container mx-auto px-4 py-16">

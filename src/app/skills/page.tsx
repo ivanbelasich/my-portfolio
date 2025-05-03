@@ -3,19 +3,24 @@
 import { motion } from 'motion/react'
 import i18next from '../../i18n'
 
+interface SkillCategory {
+  category: string;
+  skills: string[];
+}
+
 export default function Skills() {
-  const skillCategories = [
+  const skillCategories: SkillCategory[] = [
     {
       category: i18next.t('skills.frontend.category'),
-      skills: i18next.t('skills.frontend.skills', { returnObjects: true })
+      skills: i18next.t('skills.frontend.skills', { returnObjects: true }) as string[]
     },
     {
       category: i18next.t('skills.backend.category'),
-      skills: i18next.t('skills.backend.skills', { returnObjects: true })
+      skills: i18next.t('skills.backend.skills', { returnObjects: true }) as string[]
     },
     {
       category: i18next.t('skills.devops.category'),
-      skills: i18next.t('skills.devops.skills', { returnObjects: true })
+      skills: i18next.t('skills.devops.skills', { returnObjects: true }) as string[]
     }
   ]
 
