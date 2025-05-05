@@ -7,7 +7,6 @@ import { FaArrowDown } from 'react-icons/fa';
 
 export default function Hero() {
     const [isClient, setIsClient] = useState(false);
-    const [hasTriggeredScroll, setHasTriggeredScroll] = useState(false); // State to track trigger
 
     // Function to scroll smoothly to the 'about' section
     const scrollToNextSection = () => {
@@ -20,7 +19,7 @@ export default function Hero() {
     useEffect(() => {
         setIsClient(true);
         const handleWheel = (event: WheelEvent) => {
-            if (event.deltaY > 0 && !hasTriggeredScroll && window.scrollY < 150) {
+            if (event.deltaY > 0 && window.scrollY < 150) {
                 event.preventDefault();
                 scrollToNextSection();
             }
@@ -36,7 +35,7 @@ export default function Hero() {
             }
         };
 
-    }, [isClient, hasTriggeredScroll]);
+    }, [isClient]);
 
     return (
         <>
