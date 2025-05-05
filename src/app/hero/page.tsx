@@ -3,128 +3,154 @@
 import { motion } from 'framer-motion';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
-
+import { FaArrowDown } from 'react-icons/fa';
 
 export default function Hero() {
-
     const [isClient, setIsClient] = useState(false);
+    const [hasTriggeredScroll, setHasTriggeredScroll] = useState(false); // State to track trigger
+
+    // Function to scroll smoothly to the 'about' section
+    const scrollToNextSection = () => {
+        const nextSection = document.getElementById('about');
+        if (nextSection) {
+            nextSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     useEffect(() => {
         setIsClient(true);
-    }, []);
+        const handleWheel = (event: WheelEvent) => {
+            if (event.deltaY > 0 && !hasTriggeredScroll && window.scrollY < 150) {
+                event.preventDefault();
+                scrollToNextSection();
+            }
+        };
+
+        if (isClient) {
+            window.addEventListener('wheel', handleWheel, { passive: false });
+        }
+
+        return () => {
+            if (isClient) {
+                window.removeEventListener('wheel', handleWheel);
+            }
+        };
+
+    }, [isClient, hasTriggeredScroll]);
 
     return (
-        <motion.div
-            initial="hidden"
-            animate="visible"
-            className={`min-h-screen flex flex-col justify-center items-center relative overflow-hidden`}
-        >
-            {/* Particle Background */}
-            {isClient && <motion.div
-                initial={{ opacity: 0 }}
-                animate={{
-                    opacity: [0.1, 0.3, 0.2],
-                    transition: {
-                        duration: 5,
-                        repeat: Infinity,
-                        repeatType: "mirror"
-                    }
-                }}
-                className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 z-0"
+        <>
+            <motion.div
+                initial="hidden"
+                animate="visible"
+                className={`min-h-screen flex flex-col justify-center items-center relative overflow-hidden`}
             >
-                {[...Array(50)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        initial={{
-                            x: Math.random() * window.innerWidth,
-                            y: Math.random() * window.innerHeight,
-                            opacity: 0
-                        }}
-                        animate={{
-                            x: [
-                                Math.random() * window.innerWidth,
-                                Math.random() * window.innerWidth,
-                                Math.random() * window.innerWidth
-                            ],
-                            y: [
-                                Math.random() * window.innerHeight,
-                                Math.random() * window.innerHeight,
-                                Math.random() * window.innerHeight
-                            ],
-                            opacity: [0, 0.5, 0],
-                            scale: [0.5, 1, 0.5]
-                        }}
-                        transition={{
-                            duration: Math.random() * 10 + 5,
+                {/* Particle Background */}
+                {isClient && <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{
+                        opacity: [0.5, 1, 0.7],
+                        transition: {
+                            duration: 5,
                             repeat: Infinity,
                             repeatType: "mirror",
-                            ease: "easeInOut"
-                        }}
-                        className="absolute w-2 h-2 bg-white/20 rounded-full"
-                    />
-                ))}
-            </motion.div>}
-
-            {/* Gradient Overlay */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{
-                    opacity: [0.2, 0.4, 0.2],
-                    backgroundPosition: [
-                        '0% 50%',
-                        '100% 50%',
-                        '0% 50%'
-                    ]
-                }}
-                transition={{
-                    duration: 10,
-                    repeat: Infinity,
-                    repeatType: "mirror"
-                }}
-                className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-purple-900/30 mix-blend-overlay z-1"
-            />
-
-            {/* Hero Content */}
-            <motion.div
-                variants={{
-                    hidden: { opacity: 0, y: 50 },
-                    visible: {
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                            delayChildren: 0.3,
-                            staggerChildren: 0.2
                         }
-                    }
-                }}
-                className="max-w-4xl mx-auto text-center relative z-20 px-4"
-            >
-                {/* Animated Title */}
-                <motion.h1
+                    }}
+                    className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 z-0"
+                >
+                    {[...Array(50)].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{
+                                x: Math.random() * window.innerWidth,
+                                y: Math.random() * window.innerHeight,
+                                opacity: 0
+                            }}
+                            animate={{
+                                x: [
+                                    Math.random() * window.innerWidth,
+                                    Math.random() * window.innerWidth,
+                                    Math.random() * window.innerWidth
+                                ],
+                                y: [
+                                    Math.random() * window.innerHeight,
+                                    Math.random() * window.innerHeight,
+                                    Math.random() * window.innerHeight
+                                ],
+                                opacity: [0, 0.5, 0],
+                                scale: [0.5, 1, 0.5]
+                            }}
+                            transition={{
+                                duration: Math.random() * 10 + 5,
+                                repeat: Infinity,
+                                repeatType: "mirror",
+                                ease: "easeInOut"
+                            }}
+                            className="absolute w-2 h-2 bg-white/20 rounded-full"
+                        />
+                    ))}
+                </motion.div>}
+
+                {/* Gradient Overlay */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{
+                        opacity: [0.2, 0.4, 0.2],
+                        backgroundPosition: [
+                            '0% 50%',
+                            '100% 50%',
+                            '0% 50%'
+                        ]
+                    }}
+                    transition={{
+                        duration: 10,
+                        repeat: Infinity,
+                        repeatType: "mirror"
+                    }}
+                    className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-purple-900/30 mix-blend-overlay z-1"
+                />
+
+                {/* Hero Content */}
+                <motion.div
                     variants={{
-                        hidden: {
-                            opacity: 0,
-                            y: 50,
-                            letterSpacing: '-0.1em',
-                            scale: 0.8
-                        },
+                        hidden: { opacity: 0, y: 50 },
                         visible: {
                             opacity: 1,
                             y: 0,
-                            letterSpacing: '0em',
-                            scale: 1,
                             transition: {
-                                type: "spring",
-                                stiffness: 100,
-                                damping: 10
+                                delayChildren: 0.3,
+                                staggerChildren: 0.2
                             }
                         }
                     }}
-                    whileHover={{
-                        scale: 1.05,
-                        transition: { duration: 0.3 }
-                    }}
-                    className="
+                    className="max-w-4xl mx-auto text-center relative z-20 px-4"
+                >
+                    {/* Animated Title */}
+                    <motion.h1
+                        variants={{
+                            hidden: {
+                                opacity: 0,
+                                y: 50,
+                                letterSpacing: '-0.1em',
+                                scale: 0.8
+                            },
+                            visible: {
+                                opacity: 1,
+                                y: 0,
+                                letterSpacing: '0em',
+                                scale: 1,
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 100,
+                                    damping: 10
+                                }
+                            }
+                        }}
+                        whileHover={{
+                            scale: 1.05,
+                            transition: { duration: 0.3 }
+                        }}
+                        className="
             text-6xl md:text-8xl 
             font-main
             mb-4 
@@ -136,29 +162,14 @@ export default function Hero() {
             select-none
             
           "
-                >
-                    {i18next.t('hero.title')}
-                </motion.h1>
+                    >
+                        {i18next.t('hero.title')}
+                    </motion.h1>
 
-                {/* Animated Subtitle */}
-                <motion.p
-                    variants={{
-                        hidden: {
-                            opacity: 0,
-                            x: -50,
-
-                        },
-                        visible: {
-                            opacity: 1,
-                            x: 0,
-                            transition: {
-                                type: "spring",
-                                stiffness: 50,
-                                delay: 0.4
-                            }
-                        }
-                    }}
-                    className="
+                    {/* Animated Subtitle */}
+                    <motion.p
+                        variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 50, delay: 0.4 } } }}
+                        className="
             text-3xl 
             mb-8 
             text-white/80 
@@ -166,80 +177,66 @@ export default function Hero() {
             select-none
             font-main
           "
-                >
-                    {i18next.t('hero.subtitle')}
-                </motion.p>
+                    >
+                        {i18next.t('hero.subtitle')}
+                    </motion.p>
 
-                {/* Animated Action Buttons */}
-                <motion.div
-                    variants={{
-                        hidden: {
-                            opacity: 0,
-                            scale: 0.5
-                        },
-                        visible: {
-                            opacity: 1,
-                            scale: 1,
-                            transition: {
-                                type: "spring",
-                                stiffness: 120,
-                                delay: 0.6
+                    {/* Animated Action Buttons */}
+                    <motion.div
+                        variants={{
+                            hidden: { opacity: 0, scale: 0.5 }, visible: {
+                                opacity: 1,
+                                scale: 1,
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 120,
+                                    delay: 0.6
+                                }
                             }
-                        }
-                    }}
-                    className="flex justify-center space-x-6"
-                >
-                    {['aboutMe', 'projects'].map((action) => (
-                        <motion.a
-                            key={action}
-                            href={`#${action === 'aboutMe' ? 'about' : 'projects'}`}
-                            whileHover={{
+                        }}
+                        className="flex justify-center space-x-6"
+                    >
+                        {['aboutMe', 'projects'].map((action) => (
+                            <motion.a key={action} href={`#${action === 'aboutMe' ? 'about' : 'projects'}`} whileHover={{
                                 scale: 1.1,
                                 boxShadow: "0 0 20px rgba(96, 165, 250, 0.5)"
-                            }}
-                            whileTap={{ scale: 0.9 }}
-                            className={`
-                                font-main
-                px-8 
-                py-3 
-                ${action === 'aboutMe'
+                            }} whileTap={{ scale: 0.9 }} className={`
+                                font-main px-8 py-3 ${action === 'aboutMe'
                                     ? 'bg-gradient-to-r from-blue-600 to-purple-600'
                                     : 'border-2 border-white/30'}
-                text-white 
-                font-semibold 
-                rounded-full 
-                shadow-xl 
-                hover:shadow-2xl
-                transition-all
-                duration-300
-              `}
-                        >
-                            {i18next.t(`hero.${action}`)}
-                        </motion.a>
-                    ))}
+                                text-white 
+                                font-semibold 
+                                rounded-full 
+                                shadow-xl 
+                                hover:shadow-2xl
+                                `}
+                            >
+                                {i18next.t(`hero.${action}`)}
+                            </motion.a>
+                        ))}
+                    </motion.div>
                 </motion.div>
-            </motion.div>
 
-            {/* Floating Gradient Orbs */}
-            {[
-                { top: '10%', left: '10%', from: 'blue-500', to: 'purple-600' },
-                { bottom: '20%', right: '15%', from: 'purple-500', to: 'blue-600' }
-            ].map((pos, index) => (
-                <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{
-                        opacity: [0.1, 0.3, 0.1],
-                        scale: [0.5, 1, 0.7],
-                        rotate: index === 0 ? 360 : -360
-                    }}
-                    transition={{
-                        duration: 10 + index * 2,
-                        repeat: Infinity,
-                        repeatType: "reverse",
-                        ease: "easeInOut"
-                    }}
-                    className={`
+                {/* Floating Gradient Orbs */}
+                {[
+                    { top: '10%', left: '10%', from: 'blue-500', to: 'purple-600' },
+                    { bottom: '20%', right: '15%', from: 'purple-500', to: 'blue-600' }
+                ].map((pos, index) => (
+                    <motion.div
+                        key={index}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{
+                            opacity: [0.1, 0.3, 0.1],
+                            scale: [0.5, 1, 0.7],
+                            rotate: index === 0 ? 360 : -360
+                        }}
+                        transition={{
+                            duration: 10 + index * 2,
+                            repeat: Infinity,
+                            repeatType: "reverse",
+                            ease: "easeInOut"
+                        }}
+                        className={`
             absolute 
             w-72 
             h-72 
@@ -251,8 +248,41 @@ export default function Hero() {
             ${pos.top ? `top-[${pos.top}]` : `bottom-[${pos.bottom}]`}
             ${pos.left ? `left-[${pos.left}]` : `right-[${pos.right}]`}
           `}
-                />
-            ))}
-        </motion.div>
+                    />
+                ))}
+                <motion.button
+                    onClick={scrollToNextSection}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{
+                        opacity: 1,
+                        y: 0,
+                        transition: { delay: 1.2 }
+                    }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="
+                    absolute 
+                    bottom-8 
+                    z-20 
+                    bg-transparent 
+                    text-white/80 
+                    p-3 
+                    rounded-full 
+                    border-2 
+                    border-white/30 
+                    hover:border-white/50
+                    hover:text-white
+                    flex
+                    flex-col
+                    items-center
+                    cursor-pointer
+                "
+                >
+                    <FaArrowDown className="animate-bounce" />
+                </motion.button>
+            </motion.div>
+
+        </>
     );
 }
+

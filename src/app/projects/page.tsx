@@ -1,10 +1,13 @@
 'use client'
 
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import i18next from '../../i18n'
+import { useState } from 'react';
+import { FiExternalLink, FiPlay, FiX } from 'react-icons/fi';
 
 export default function Projects() {
   const language = i18next.language;
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   const projectsData = {
     es: [
@@ -22,7 +25,7 @@ export default function Projects() {
           "Restructuración de código para arquitectura más limpia.",
           "Mejoras en UX/UI para una mejor experiencia del usuario, desarrollo de diseño mobile-first."
         ],
-        demoLink: "https://longxchangefrontend-development.up.railway.app/"
+        demoLink: "https://drive.google.com/file/d/1nExqDf4dINN_0rkP005YEcIt9nbv1-y9/view?usp=drive_link",
       },
       {
         name: "PlanetPay",
@@ -51,7 +54,7 @@ export default function Projects() {
           "Sistema de conversión y swap de criptoactivos",
           "Financiamiento de $80k de Stellar Foundation"
         ],
-        demoLink: "https://www.youtube.com/watch?v=nS8COzNxajc"
+        demoLink: "https://drive.google.com/file/d/1oOlJbuCrez1aNQ4xhuK5lMpHhmZ4Dc4m/view?usp=sharing"
       }
     ],
     en: [
@@ -69,7 +72,7 @@ export default function Projects() {
           "Code restructuring for cleaner architecture.",
           "UX/UI improvements for better user experience, mobile-first design development."
         ],
-        demoLink: "https://longxchangefrontend-development.up.railway.app/"
+        demoLink: "https://drive.google.com/file/d/1nExqDf4dINN_0rkP005YEcIt9nbv1-y9/view?usp=drive_link"
       },
       {
         name: "PlanetPay",
@@ -98,12 +101,45 @@ export default function Projects() {
           "System for conversion and swap of crypto assets",
           "Secured $80k funding from Stellar Foundation"
         ],
-        demoLink: "https://www.youtube.com/watch?v=nS8COzNxajc"
+        demoLink: "https://drive.google.com/file/d/1oOlJbuCrez1aNQ4xhuK5lMpHhmZ4Dc4m/view?usp=sharing"
       }
     ]
   };
 
-  const cvProjects = language === 'es' ? projectsData.es : projectsData.en;
+  const cvProjects = language === 'es' ? projectsData.es : projectsData.en
+
+  const isVideoLink = (url: string) => {
+    return /\.(mp4|webm|mov)$/i.test(url) ||
+      /youtube|youtu\.be|drive\.google/.test(url)
+  }
+
+  const getVideoEmbedUrl = (url: string) => {
+    // YouTube
+    if (/youtube|youtu\.be/.test(url)) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+      const match = url.match(regExp)
+      const videoId = (match && match[2].length === 11) ? match[2] : null
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : url
+    }
+
+    // Google Drive (necesitarás ajustar esto según cómo compartas tus videos)
+    if (/drive\.google/.test(url)) {
+      const fileId = url.match(/\/file\/d\/([^\/]+)/)?.[1] ||
+        url.match(/id=([^&]+)/)?.[1]
+      return fileId ? `https://drive.google.com/file/d/${fileId}/preview` : url
+    }
+
+    // Para enlaces directos a videos (MP4, WebM, etc)
+    return url
+  }
+
+  const openVideoModal = (url: string) => {
+    setSelectedVideo(url)
+  }
+
+  const closeVideoModal = () => {
+    setSelectedVideo(null)
+  }
 
   return (
     <div className="container mx-auto px-4" id="projects">
@@ -112,145 +148,211 @@ export default function Projects() {
       </h2>
 
       <div className="grid md:grid-cols-2 gap-8">
-        {cvProjects.map((project, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: 0.6,
-              delay: index * 0.2,
-              type: 'spring',
-              stiffness: 100
-            }}
-            whileHover={{
-              scale: 1.02,
-              transition: { duration: 0.2 }
-            }}
-            className="
-              bg-gradient-to-br 
-              from-gray-800/70 
-              to-gray-800/40 
-              border 
-              border-gray-700/50 
-              rounded-2xl 
-              p-6 
-              shadow-xl 
-              overflow-hidden 
-              relative
-              group
-              transition-all
-              duration-300
-              mb-6
-            "
-          >
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-            
-            <div className="flex justify-between items-center mb-4">
-              <div>
-                <motion.h3 
-                  className="
-                    text-2xl 
-                    font-bold 
-                    text-transparent 
-                    bg-clip-text 
-                    bg-gradient-to-r 
-                    from-blue-400 
-                    to-purple-600 
-                    transition-all 
-                    duration-300
-                    mb-1
-                  "
-                  whileHover={{ 
-                    scale: 1.05,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  <a href={project.demoLink} target="_blank" rel="noopener noreferrer">
-                    {project.name}
-                  </a>
-                </motion.h3>
-                <p className="text-sm text-gray-400 flex justify-around">
-                  {project.company}  <span className="ml-2">{project.period}</span>
-                </p>
-              </div>
-            </div>
+        {cvProjects.map((project, index) => {
+          const hasVideo = project.demoLink && isVideoLink(project.demoLink)
 
-            <p className="text-lg text-white/90 font-semibold mb-4">
-              {project.description}
-            </p>
+          return (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.2,
+                type: 'spring',
+                stiffness: 100
+              }}
+              whileHover={{
+                scale: 1.02,
+                transition: { duration: 0.2 }
+              }}
+              className="
+                bg-gradient-to-br 
+                from-gray-800/70 
+                to-gray-800/40 
+                border 
+                border-gray-700/50 
+                rounded-2xl 
+                p-6 
+                shadow-xl 
+                overflow-hidden 
+                relative
+                group
+                mb-6
+              "
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
 
-            <div className="mb-4">
-              <h4 className="text-blue-400 text-sm font-semibold mb-2">
-                {i18next.t('projects.achievements')}
-              </h4>
-              <ul className="space-y-1">
-                {project.achievements.map((achievement, idx) => (
-                  <li key={idx} className="flex items-start">
-                    <span className="text-blue-400 mr-2">•</span>
-                    <span className="text-gray-400 text-sm">{achievement}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="mb-4">
-              <h4 className="text-blue-400 text-sm font-semibold mb-2">
-                {project.technologiesTitle}
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech, techIndex) => (
-                  <motion.span
-                    key={techIndex}
-                    className="bg-white/10 text-white px-3 py-1 rounded-full text-xs font-medium"
+              <div className="flex justify-between items-center mb-4">
+                <div>
+                  <motion.h3
+                    className="
+                      text-2xl 
+                      font-bold 
+                      text-transparent 
+                      bg-clip-text 
+                      bg-gradient-to-r 
+                      from-blue-400 
+                      to-purple-600 
+                      mb-1
+                    "
                     whileHover={{
-                      scale: 1.1,
-                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      scale: 1.05,
                       transition: { duration: 0.2 }
                     }}
                   >
-                    {tech}
-                  </motion.span>
-                ))}
+                    {project.name}
+                  </motion.h3>
+                  <p className="text-sm text-gray-400 flex justify-around">
+                    {project.company}  <span className="ml-2">{project.period}</span>
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <div className="flex space-x-4">
-              {project.demoLink && (
-                <motion.a
-                  href={project.demoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ 
-                    scale: 1.05,
-                    boxShadow: "0 10px 20px rgba(96, 165, 250, 0.2)",
-                    transition: { duration: 0.2 }
-                  }}
-                  className="
-                    bg-gradient-to-r 
-                    from-blue-500 
-                    to-purple-600 
-                    text-white 
-                    px-5 
-                    py-2.5 
-                    rounded-full 
-                    flex 
-                    items-center 
-                    text-sm 
-                    font-medium
-                    shadow-md
-                    hover:opacity-90
-                    transition-all
-                    duration-300
-                  "
-                >
-                  🌐 {i18next.t('projects.demo')}
-                </motion.a>
-              )}
-            </div>
-          </motion.div>
-        ))}
+              <p className="text-lg text-white/90 font-semibold mb-4">
+                {project.description}
+              </p>
+
+              <div className="mb-4">
+                <h4 className="text-blue-400 text-sm font-semibold mb-2">
+                  {i18next.t('projects.achievements')}
+                </h4>
+                <ul className="space-y-1">
+                  {project.achievements.map((achievement, idx) => (
+                    <li key={idx} className="flex items-start">
+                      <span className="text-blue-400 mr-2">•</span>
+                      <span className="text-gray-400 text-sm">{achievement}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mb-4">
+                <h4 className="text-blue-400 text-sm font-semibold mb-2">
+                  {project.technologiesTitle}
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech, techIndex) => (
+                    <motion.span
+                      key={techIndex}
+                      className="bg-white/10 text-white px-3 py-1 rounded-full text-xs font-medium"
+                      whileHover={{
+                        scale: 1.1,
+                        backgroundColor: 'rgba(255,255,255,0.2)',
+                        transition: { duration: 0.2 }
+                      }}
+                    >
+                      {tech}
+                    </motion.span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex justify-center space-x-4">
+                {project.demoLink && (
+                  <>
+                    {hasVideo ? (
+                      <motion.button
+                        onClick={() => openVideoModal(project.demoLink)}
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.2 }
+                        }}
+                        className="
+                          bg-gradient-to-r 
+                          from-red-500 
+                          to-red-700 
+                          text-white 
+                          px-5 
+                          py-2.5 
+                          rounded-full 
+                          flex 
+                          items-center 
+                          text-sm 
+                          font-medium
+                          shadow-md
+                          hover:opacity-90
+                          cursor-pointer
+                        "
+                      >
+                        <FiPlay className="mr-2" />
+                        {i18next.t('projects.watchDemo')}
+                      </motion.button>
+                    ) : (
+                      <motion.a
+                        href={project.demoLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.2 }
+                        }}
+                        className="
+                          bg-gradient-to-r 
+                          from-red-500 
+                          to-red-700 
+                          text-white 
+                          px-5 
+                          py-2.5 
+                          rounded-full 
+                          flex 
+                          items-center 
+                          text-sm 
+                          font-medium
+                          shadow-md
+                          hover:opacity-90
+                          cursor-pointer
+                        "
+                      >
+                        <FiExternalLink className="mr-2" />
+                        {i18next.t('projects.viewProject')}
+                      </motion.a>
+                    )}
+                  </>
+                )}
+              </div>
+            </motion.div>
+          )
+        })}
       </div>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {selectedVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+            onClick={closeVideoModal}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 50 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 50 }}
+              className="relative w-full max-w-4xl bg-gray-900 rounded-xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={closeVideoModal}
+                className="absolute top-4 right-4 z-10 text-white bg-gray-800/80 hover:bg-gray-700/90 rounded-full p-2 transition-colors"
+              >
+                <FiX size={24} />
+              </button>
+
+              <div className="aspect-video w-full">
+                <iframe
+                  src={getVideoEmbedUrl(selectedVideo)}
+                  className="w-full h-full"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

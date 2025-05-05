@@ -31,7 +31,9 @@ i18next.init({
         },
         projects: {
           title: "Proyectos destacados",
-          demo: "Demo",
+          demo: "Demo", // Existing key, kept for safety
+          viewProject: "Ver Proyecto", // Key for external links
+          watchDemo: "Ver Demo", // Key for video modal button
           code: "Código",
           achievements: "Logros clave:",
           projects: [
@@ -109,7 +111,9 @@ i18next.init({
         },
         projects: {
           title: "Principal Projects",
-          demo: "Demo",
+          demo: "Demo", // Existing key, kept for safety
+          viewProject: "View Project", // Key for external links
+          watchDemo: "Watch Demo", // Key for video modal button
           code: "Code",
           achievements: "Key Achievements:",
           projects: [

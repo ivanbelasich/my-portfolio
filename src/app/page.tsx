@@ -10,6 +10,7 @@ import Contact from './contact/page'
 import { FaArrowUp } from 'react-icons/fa'
 import Hero from './hero/page'
 import { Space_Grotesk } from 'next/font/google';
+import WorkMethodologies from './metodologies/page'
 
 const fontSpaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -98,6 +99,11 @@ export default function Home() {
       {/* Projects Section */}
       <section id="projects" className="min-h-screen bg-gray-900 py-16">
         <Projects />
+      </section>
+
+      {/* Work Methodologies Section */}
+      <section id="work-methodologies" className="min-h-screen bg-gray-900 py-16">
+        <WorkMethodologies />
       </section>
 
       {/* Skills Section */}
