@@ -9,8 +9,12 @@ interface SkillCategory {
   color: string;
 }
 
+interface LanguageSkillCategory extends SkillCategory {
+  isLanguageCategory: boolean;
+}
+
 export default function Skills() {
-  const skillCategories: SkillCategory[] = [
+  const skillCategories: Array<SkillCategory | LanguageSkillCategory> = [
     {
       category: i18next.language === 'es' ? 'Frontend' : 'Frontend',
       skills: ['React', 'React Native', 'TypeScript', 'Tailwind CSS', 'Zustand', 'Next.js', 'Zod', 'Redux', 'Formik' ],
@@ -134,7 +138,7 @@ export default function Skills() {
                 ))}
               </div>
               {/* Conditional rendering for the certificate link */}
-              {category.isLanguageCategory && (
+              {'isLanguageCategory' in category && category.isLanguageCategory && (
                 <motion.div className="mt-4">
                   <motion.a
                     href="https://cert.efset.org/es/eigXs2"
