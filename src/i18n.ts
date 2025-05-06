@@ -10,7 +10,9 @@ i18next.init({
           title: "Iván Belasich",
           subtitle: "Desarrollador de Software | Frontend & Blockchain",
           aboutMe: "Sobre Mí",
-          projects: "Proyectos"
+          projects: "Proyectos",
+          downloadCv: "Descargar CV",
+          viewCertificate: "Ver Certificado EFSET"
         },
         about: {
           experience: {
@@ -66,7 +68,10 @@ i18next.init({
           devops: {
             category: "DevOps & Tools",
             skills: ["Docker", "GitHub Actions", "Snyk", "Git", "Postman"]
-          }
+          },
+          languagesCategoryTitle: "Idiomas",
+          englishLevelC2: "Inglés: Nivel C2 (EFSET)",
+          viewCertificateLink: "Ver Certificado"
         },
         contact: {
           title: "Contáctame",
@@ -93,7 +98,9 @@ i18next.init({
           title: "Iván Belasich",
           subtitle: "Software Developer | Frontend & Blockchain",
           aboutMe: "About Me",
-          projects: "Projects"
+          projects: "Projects",
+          downloadCv: "Download CV",
+          viewCertificate: "View EFSET Certificate"
         },
         about: {
           experience: {
@@ -149,7 +156,10 @@ i18next.init({
           devops: {
             category: "DevOps & Tools",
             skills: ["Docker", "GitHub Actions", "Snyk", "Git", "Postman"]
-          }
+          },
+          languagesCategoryTitle: "Languages",
+          englishLevelC2: "English: C2 Level (EFSET)",
+          viewCertificateLink: "View Certificate"
         },
         contact: {
           title: "Contact Me",

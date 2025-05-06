@@ -190,28 +190,49 @@ export default function Hero() {
                                 }
                             }
                         }}
-                        className="flex justify-center space-x-6"
+                        className="flex flex-wrap justify-center items-center gap-6"
                     >
+                        {/* Original Buttons */}
                         {['aboutMe', 'projects'].map((action) => (
-                            <motion.a key={action} href={`#${action === 'aboutMe' ? 'about' : 'projects'}`} whileHover={{
-                                scale: 1.1,
-                                boxShadow: "0 0 20px rgba(96, 165, 250, 0.5)"
-                            }} whileTap={{ scale: 0.9 }} className={`
-                                font-main px-8 py-3
-                                ${action === 'aboutMe'
-                                    ? 'bg-primary-accent text-background-main'
-                                    : 'border border-primary-accent text-primary-accent'}
-                                font-semibold
-                                rounded-full
-                                shadow-xl
-                                hover:shadow-2xl
-                                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-accent focus:ring-offset-background-main
+                            <motion.a 
+                                key={action} 
+                                href={`#${action === 'aboutMe' ? 'about' : 'projects'}`} 
+                                whileHover={{
+                                    scale: 1.1,
+                                    boxShadow: "0 0 20px rgba(96, 165, 250, 0.5)" // Original primary-accent color
+                                }} 
+                                whileTap={{ scale: 0.9 }} 
+                                className={`
+                                    font-main px-8 py-3
+                                    ${action === 'aboutMe' 
+                                        ? 'bg-primary-accent/80 text-white' 
+                                        : 'border border-primary-accent text-primary-accent'}
+                                    rounded-lg 
+                                    shadow-xl
+                                    hover:shadow-2xl
+                                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-accent focus:ring-offset-background-main
+                                    ${action === 'projects' && 'hover:bg-primary-accent/10'}
                                 `}
                             >
                                 {i18next.t(`hero.${action}`)}
                             </motion.a>
                         ))}
+                        {/* Download CV Button */}
+                        <motion.a
+                          href="/documents/CV_Software_Developer_Belasich_Ivan.pdf" // Asegúrate que esta ruta es correcta
+                          download
+                          whileHover={{
+                            scale: 1.1,
+                            boxShadow: "0 0 20px rgba(96, 165, 250, 0.5)" 
+                          }} 
+                          whileTap={{ scale: 0.9 }} 
+                          className="font-main px-8 py-3 bg-primary-accent/80 text-white rounded-lg shadow-xl hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-accent focus:ring-offset-background-main" // Clases md:* eliminadas
+                        >
+                          {i18next.t('hero.downloadCv')}
+                        </motion.a>
+
                     </motion.div>
+
                 </motion.div>
 
                 {/* Floating Gradient Orbs */}

@@ -149,7 +149,7 @@ export default function Projects() {
 
       <div className="grid md:grid-cols-2 gap-8">
         {cvProjects.map((project, index) => {
-          const hasVideo = project.demoLink && isVideoLink(project.demoLink)
+          // const hasVideo = project.demoLink && isVideoLink(project.demoLink) // Removed as it's no longer used directly here
 
           return (
             <motion.div
@@ -183,40 +183,7 @@ export default function Projects() {
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-primary-accent"></div>
 
-              {/* Top-right corner triangle banner */}
-              {project.demoLink && (
-                <div className="absolute top-0 right-0 w-32 h-32 overflow-hidden z-10 group">
-                  {/* Rotated background element */}
-                  <div
-                    className="absolute top-[20px] cursor-pointer -right-[48px] w-42 h-12 bg-primary-accent shadow-md transform rotate-45 flex items-center justify-center transition-opacity duration-300 group-hover:opacity-90"
-                  >
-                    {/* Content (Icon) inside the rotated element */}
-                    {hasVideo ? (
-                      <motion.button
-                        title={i18next.t('projects.watchDemo')}
-                        onClick={() => openVideoModal(project.demoLink)}
-                        className="text-background-main transform -rotate-45 mt-1 cursor-pointer" // Counter-rotate icon
-                        whileHover={{ scale: 1.2 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <FiPlay size={18} />
-                      </motion.button>
-                    ) : (
-                      <motion.a
-                        title={i18next.t('projects.viewProject')}
-                        href={project.demoLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-text-main transform -rotate-45 mt-1 cursor-pointer" // Counter-rotate icon
-                        whileHover={{ scale: 1.2 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <FiExternalLink size={18} />
-                      </motion.a>
-                    )}
-                  </div>
-                </div>
-              )}
+              {/* Triangle banner removed */}
 
               <div className="flex justify-between items-center mb-4">
                 <div>
@@ -239,42 +206,69 @@ export default function Projects() {
                 {project.description}
               </p>
 
-              <div className="mb-4">
-                <h4 className="text-primary-accent text-sm font-semibold mb-2">
-                  {i18next.t('projects.achievements')}
-                </h4>
-                <ul className="space-y-1">
-                  {project.achievements.map((achievement, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <span className="text-primary-accent mr-2">•</span>
-                      <span className="text-text-main/80 text-sm">{achievement}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {project.technologies && project.technologies.length > 0 && (
+                <div className="mt-4">
+                  <h4 className="text-sm font-semibold text-text-secondary mb-2">
+                    {project.technologiesTitle || (language === 'es' ? 'Tecnologías:' : 'Technologies:')}
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech: string) => (
+                      <span 
+                        key={tech} 
+                        className="bg-primary-accent/20 text-primary-accent text-xs font-semibold px-2.5 py-0.5 rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div> // Correctly closing the div from line 242
+              )}
 
-              <div className="mb-4">
-                <h4 className="text-primary-accent text-sm font-semibold mb-2">
-                  {project.technologiesTitle}
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech, techIndex) => (
-                    <motion.span
-                      key={techIndex}
-                      className="bg-primary-accent/20 text-primary-accent border-primary-accent/30 py-1 rounded-full text-xs font-medium"
-                      whileHover={{
-                        scale: 1.1,
-                        backgroundColor: 'rgba(255,255,255,0.2)',
-                        transition: { duration: 0.2 }
-                      }}
-                    >
-                      {tech}
-                    </motion.span>
-                  ))}
+              {/* Achievements */}
+              {project.achievements && project.achievements.length > 0 && (
+                <div className="mt-4">
+                  <h4 className="text-sm font-semibold text-text-secondary mb-2">
+                    {i18next.t('projects.achievements')}
+                  </h4>
+                  <ul className="list-disc list-inside space-y-1 text-text-secondary text-sm">
+                    {project.achievements.map((achievement: string, achIndex: number) => (
+                      <li key={achIndex}>{achievement}</li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
+              )}
 
               {/* Removed the original button div that was here */}
+
+              {/* New Prominent Buttons */}
+              {project.demoLink && (
+                <div className="mt-6 flex flex-wrap gap-3 justify-end"> {/* Container for buttons */}
+                  {isVideoLink(project.demoLink) ? (
+                    <motion.button
+                      onClick={() => openVideoModal(project.demoLink)}
+                      className="px-4 py-2 bg-primary-accent text-background-main rounded-lg font-semibold hover:bg-primary-accent/80 transition-colors flex items-center gap-2 text-sm"
+                      whileHover={{ scale: 1.05, transition: { duration: 0.1 } }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <FiPlay size={18} />
+                      {i18next.t('projects.watchDemo')}
+                    </motion.button>
+                  ) : (
+                    <motion.a
+                      href={project.demoLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 bg-primary-accent text-background-main rounded-lg font-semibold hover:bg-primary-accent/80 transition-colors flex items-center gap-2 text-sm"
+                      whileHover={{ scale: 1.05, transition: { duration: 0.1 } }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <FiExternalLink size={18} />
+                      {i18next.t('projects.viewProject')}
+                    </motion.a>
+                  )}
+                  {/* You could add more buttons here, e.g., for source code if project.sourceLink exists */}
+                </div>
+              )}
 
             </motion.div>
           )
