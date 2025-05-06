@@ -55,7 +55,7 @@ export default function Hero() {
                             repeatType: "mirror",
                         }
                     }}
-                    className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 z-0"
+                    className="absolute inset-0 bg-background-main z-0"
                 >
                     {[...Array(50)].map((_, i) => (
                         <motion.div
@@ -85,7 +85,7 @@ export default function Hero() {
                                 repeatType: "mirror",
                                 ease: "easeInOut"
                             }}
-                            className="absolute w-2 h-2 bg-white/20 rounded-full"
+                            className="absolute w-2 h-2 bg-text-main/30 rounded-full"
                         />
                     ))}
                 </motion.div>}
@@ -106,7 +106,7 @@ export default function Hero() {
                         repeat: Infinity,
                         repeatType: "mirror"
                     }}
-                    className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-purple-900/30 mix-blend-overlay z-1"
+                    className="absolute inset-0 bg-gradient-to-r from-primary-accent/10 to-background-main/10 mix-blend-overlay z-1"
                 />
 
                 {/* Hero Content */}
@@ -153,11 +153,8 @@ export default function Hero() {
             text-6xl md:text-8xl 
             font-main
             mb-4 
-            bg-clip-text 
-            text-transparent 
-            bg-gradient-to-r 
-            from-blue-400 
-            to-purple-600 
+            bg-clip-text       
+            text-text-main 
             select-none
             
           "
@@ -171,7 +168,7 @@ export default function Hero() {
                         className="
             text-3xl 
             mb-8 
-            text-white/80 
+            text-text-main 
             font-light 
             select-none
             font-main
@@ -200,14 +197,15 @@ export default function Hero() {
                                 scale: 1.1,
                                 boxShadow: "0 0 20px rgba(96, 165, 250, 0.5)"
                             }} whileTap={{ scale: 0.9 }} className={`
-                                font-main px-8 py-3 ${action === 'aboutMe'
-                                    ? 'bg-gradient-to-r from-blue-600 to-purple-600'
-                                    : 'border-2 border-white/30'}
-                                text-white 
-                                font-semibold 
-                                rounded-full 
-                                shadow-xl 
+                                font-main px-8 py-3
+                                ${action === 'aboutMe'
+                                    ? 'bg-primary-accent text-background-main'
+                                    : 'border border-primary-accent text-primary-accent'}
+                                font-semibold
+                                rounded-full
+                                shadow-xl
                                 hover:shadow-2xl
+                                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-accent focus:ring-offset-background-main
                                 `}
                             >
                                 {i18next.t(`hero.${action}`)}
@@ -264,13 +262,13 @@ export default function Hero() {
                     bottom-8 
                     z-20 
                     bg-transparent 
-                    text-white/80 
+                    text-text-secondary 
                     p-3 
                     rounded-full 
                     border-2 
-                    border-white/30 
-                    hover:border-white/50
-                    hover:text-white
+                    border-border-subtle 
+                    hover:border-primary-accent
+                    hover:text-text-main
                     flex
                     flex-col
                     items-center

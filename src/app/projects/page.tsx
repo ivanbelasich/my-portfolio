@@ -143,9 +143,9 @@ export default function Projects() {
 
   return (
     <div className="container mx-auto px-4" id="projects">
-      <h2 className="text-5xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+      <h3 className="text-2xl font-bold mb-2 text-text-main">
         {i18next.t('projects.title')}
-      </h2>
+      </h3>
 
       <div className="grid md:grid-cols-2 gap-8">
         {cvProjects.map((project, index) => {
@@ -168,10 +168,10 @@ export default function Projects() {
               }}
               className="
                 bg-gradient-to-br 
-                from-gray-800/70 
-                to-gray-800/40 
+                from-border-subtle/70 
+                to-border-subtle/40 
                 border 
-                border-gray-700/50 
+                border-primary-accent/50 
                 rounded-2xl 
                 p-6 
                 shadow-xl 
@@ -181,61 +181,87 @@ export default function Projects() {
                 mb-6
               "
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+              <div className="absolute top-0 left-0 w-full h-1 bg-primary-accent"></div>
+
+              {/* Top-right corner triangle banner */}
+              {project.demoLink && (
+                <div className="absolute top-0 right-0 w-32 h-32 overflow-hidden z-10 group">
+                  {/* Rotated background element */}
+                  <div
+                    className="absolute top-[20px] cursor-pointer -right-[48px] w-42 h-12 bg-primary-accent shadow-md transform rotate-45 flex items-center justify-center transition-opacity duration-300 group-hover:opacity-90"
+                  >
+                    {/* Content (Icon) inside the rotated element */}
+                    {hasVideo ? (
+                      <motion.button
+                        title={i18next.t('projects.watchDemo')}
+                        onClick={() => openVideoModal(project.demoLink)}
+                        className="text-background-main transform -rotate-45 mt-1 cursor-pointer" // Counter-rotate icon
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <FiPlay size={18} />
+                      </motion.button>
+                    ) : (
+                      <motion.a
+                        title={i18next.t('projects.viewProject')}
+                        href={project.demoLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-text-main transform -rotate-45 mt-1 cursor-pointer" // Counter-rotate icon
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <FiExternalLink size={18} />
+                      </motion.a>
+                    )}
+                  </div>
+                </div>
+              )}
 
               <div className="flex justify-between items-center mb-4">
                 <div>
                   <motion.h3
-                    className="
-                      text-2xl 
-                      font-bold 
-                      text-transparent 
-                      bg-clip-text 
-                      bg-gradient-to-r 
-                      from-blue-400 
-                      to-purple-600 
-                      mb-1
-                    "
                     whileHover={{
-                      scale: 1.05,
+                      scale: 1.1,
+                      backgroundColor: 'rgba(255,255,255,0.2)',
                       transition: { duration: 0.2 }
                     }}
                   >
                     {project.name}
                   </motion.h3>
-                  <p className="text-sm text-gray-400 flex justify-around">
+                  <p className="text-sm text-text-secondary">
                     {project.company}  <span className="ml-2">{project.period}</span>
                   </p>
                 </div>
               </div>
 
-              <p className="text-lg text-white/90 font-semibold mb-4">
+              <p className="text-lg text-text-main font-semibold mb-4">
                 {project.description}
               </p>
 
               <div className="mb-4">
-                <h4 className="text-blue-400 text-sm font-semibold mb-2">
+                <h4 className="text-primary-accent text-sm font-semibold mb-2">
                   {i18next.t('projects.achievements')}
                 </h4>
                 <ul className="space-y-1">
                   {project.achievements.map((achievement, idx) => (
                     <li key={idx} className="flex items-start">
-                      <span className="text-blue-400 mr-2">•</span>
-                      <span className="text-gray-400 text-sm">{achievement}</span>
+                      <span className="text-primary-accent mr-2">•</span>
+                      <span className="text-text-main/80 text-sm">{achievement}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
               <div className="mb-4">
-                <h4 className="text-blue-400 text-sm font-semibold mb-2">
+                <h4 className="text-primary-accent text-sm font-semibold mb-2">
                   {project.technologiesTitle}
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, techIndex) => (
                     <motion.span
                       key={techIndex}
-                      className="bg-white/10 text-white px-3 py-1 rounded-full text-xs font-medium"
+                      className="bg-primary-accent/20 text-primary-accent border-primary-accent/30 py-1 rounded-full text-xs font-medium"
                       whileHover={{
                         scale: 1.1,
                         backgroundColor: 'rgba(255,255,255,0.2)',
@@ -248,69 +274,8 @@ export default function Projects() {
                 </div>
               </div>
 
-              <div className="flex justify-center space-x-4">
-                {project.demoLink && (
-                  <>
-                    {hasVideo ? (
-                      <motion.button
-                        onClick={() => openVideoModal(project.demoLink)}
-                        whileHover={{
-                          scale: 1.05,
-                          transition: { duration: 0.2 }
-                        }}
-                        className="
-                          bg-gradient-to-r 
-                          from-red-500 
-                          to-red-700 
-                          text-white 
-                          px-5 
-                          py-2.5 
-                          rounded-full 
-                          flex 
-                          items-center 
-                          text-sm 
-                          font-medium
-                          shadow-md
-                          hover:opacity-90
-                          cursor-pointer
-                        "
-                      >
-                        <FiPlay className="mr-2" />
-                        {i18next.t('projects.watchDemo')}
-                      </motion.button>
-                    ) : (
-                      <motion.a
-                        href={project.demoLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{
-                          scale: 1.05,
-                          transition: { duration: 0.2 }
-                        }}
-                        className="
-                          bg-gradient-to-r 
-                          from-red-500 
-                          to-red-700 
-                          text-white 
-                          px-5 
-                          py-2.5 
-                          rounded-full 
-                          flex 
-                          items-center 
-                          text-sm 
-                          font-medium
-                          shadow-md
-                          hover:opacity-90
-                          cursor-pointer
-                        "
-                      >
-                        <FiExternalLink className="mr-2" />
-                        {i18next.t('projects.viewProject')}
-                      </motion.a>
-                    )}
-                  </>
-                )}
-              </div>
+              {/* Removed the original button div that was here */}
+
             </motion.div>
           )
         })}
@@ -323,7 +288,7 @@ export default function Projects() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-background-main/90 backdrop-blur-sm flex items-center justify-center z-50 p-4"
             onClick={closeVideoModal}
           >
             <motion.div
@@ -335,7 +300,7 @@ export default function Projects() {
             >
               <button
                 onClick={closeVideoModal}
-                className="absolute top-4 right-4 z-10 text-white bg-gray-800/80 hover:bg-gray-700/90 rounded-full p-2 transition-colors"
+                className="absolute top-4 right-4 z-10 text-text-main bg-primary-accent/80 hover:bg-primary-accent/90 rounded-full p-2 transition-colors"
               >
                 <FiX size={24} />
               </button>

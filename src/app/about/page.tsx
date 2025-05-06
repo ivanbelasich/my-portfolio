@@ -2,19 +2,20 @@
 
 import { motion } from 'framer-motion'
 import i18next from '../../i18n'
+import { FiExternalLink } from 'react-icons/fi'
 
 export default function About() {
   const professionalExperience = {
     es: [
       {
-        company: 'GranMenu',
+        company: 'Keroke',
         role: 'Desarrollador Frontend',
         period: 'Feb 2024 - Presente',
         location: 'Chile',
         description: 'Empresa de servicios tecnológicos especializada en staff augmentation para el sector FinTech. Proporciona talento de desarrollo a empresas que requieren recursos especializados para proyectos específicos.',
-        type: 'Proveedor de Servicios de Talento Tech',
+        type: 'Fábrica de Software',
         employmentType: 'Part-time',
-        companyLink: 'https://granmenu.me/'
+        companyLink: 'https://www.keroke.ro/'
       },
       {
         company: 'Bigger',
@@ -29,14 +30,14 @@ export default function About() {
     ],
     en: [
       {
-        company: 'GranMenu',
+        company: 'Keroke',
         role: 'Frontend Developer',
         period: 'Feb 2024 - Present',
         location: 'Chile',
         description: 'Technology services company specializing in staff augmentation for the FinTech sector. Provides development talent to companies requiring specialized resources for specific projects.',
-        type: 'Tech Talent Outsourcing Provider',
+        type: 'Software Factory',
         employmentType: 'Part-time',
-        companyLink: 'https://granmenu.me/'
+        companyLink: 'https://www.keroke.ro/'
       },
       {
         company: 'Bigger',
@@ -73,7 +74,7 @@ export default function About() {
             type: 'spring',
             bounce: 0.4
           }}
-          className="text-5xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600"
+          className="text-5xl font-bold mb-12 text-center text-primary-accent"
         >
           {i18next.t('about.title')}
         </motion.h2>
@@ -86,91 +87,91 @@ export default function About() {
               delay: 0.4,
               duration: 0.6
             }}
-            className="text-xl text-gray-300 leading-relaxed"
+            className="text-xl text-text-main leading-relaxed"
           >
             {i18next.t('about.description')}
           </motion.p>
         </div>
 
-        <div className="space-y-8">
+        <div className="relative pl-4 md:pl-0 md:w-3/4 lg:w-2/3 mx-auto">
           <motion.h3
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-3xl font-semibold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600"
+            className="text-3xl font-semibold mb-12 text-center text-primary-accent"
           >
             {i18next.t('about.experience.title')}
           </motion.h3>
 
-          {cvExperience.map((exp, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.2,
-                type: 'spring',
-                stiffness: 100
-              }}
-              className="
-                bg-gradient-to-br 
-                from-gray-800/70 
-                to-gray-800/40 
-                border 
-                border-gray-700/50 
-                rounded-2xl 
-                p-6 
-                shadow-xl 
-                overflow-hidden 
-                relative
-                group
-                transition-all
-                duration-300
-                mb-6
-                hover:scale-[1.02]
-              "
-            >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-
-              <div className="flex justify-between items-center mb-4">
-                <div>
-                  <h4 className="
-                    text-2xl 
-                    font-bold 
-                    text-transparent 
-                    bg-clip-text 
-                    bg-gradient-to-r 
-                    from-blue-400 
-                    to-purple-600 
-                    transition-all 
-                    duration-300
-                    mb-1
-                  ">
-                    <a
-                      href={exp.companyLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:underline"
-                    >
-                      {exp.company}
-                    </a>
-                  </h4>
-                  <p className="text-sm text-gray-400 flex items-center">
-                    <span className="mr-2">🌐</span>
-                    {exp.type} · <span className="ml-2">🌎 {exp.location}</span>
-                  </p>
+          {/* Vertical Timeline Line */}
+          <div className="absolute left-4 top-0 h-full w-0.5 bg-gradient-to-b from-transparent via-border-subtle to-transparent -ml-[1px]"></div>
+          
+          <div className="space-y-12">
+            {cvExperience.map((exp, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, x: -50 }} // All enter from left
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.2,
+                  type: 'spring',
+                  stiffness: 100
+                }}
+                className={`relative flex items-start pl-12`} // Consistent padding-left
+              >
+                {/* Timeline Dot */}
+                <div className={`absolute left-4 top-5 w-4 h-4 rounded-full bg-primary-accent ring-background-main z-10 -ml-[9px]`}></div>
+                
+                {/* Experience Card (Content) */}
+                <div className={`w-full`}> { /* Card takes full width to the right */}
+                  <div
+                    className="
+                      bg-gradient-to-br 
+                      from-background-subtle/70 
+                      to-background-subtle/40 
+                      from-border-subtle/70 
+                      to-border-subtle/40 
+                      border 
+                      border-primary-accent/50 
+                      rounded-2xl 
+                      p-6 
+                      shadow-xl 
+                      overflow-hidden 
+                      relative
+                      group
+                      transition-all
+                      duration-300
+                      hover:scale-[1.02]
+                    "
+                  >
+                    <div className="absolute top-0 left-0 w-full h-1 bg-primary-accent"></div>
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h4 className="text-xl font-bold text-off-white mb-1">
+                          <a href={exp.companyLink} target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center">
+                            {exp.company}
+                            <FiExternalLink className="ml-2 text-text-secondary text-sm" />
+                          </a>
+                        </h4>
+                        {/* Moved Period here for better visibility */}
+                        <span className="block text-sm text-off-white font-medium mb-1">{exp.period}</span> 
+                        <p className="text-sm text-text-secondary flex items-center">
+                          <span className="mr-1">🌐</span> {exp.type} <span className="ml-3">🌎 {exp.location}</span>
+                        </p>
+                      </div>
+                      <div className="text-right flex-shrink-0 ml-4">
+                        {/* Removed Period from here, kept employment type */}
+                        <span className="block text-xs text-text-secondary/80">🕒 {exp.employmentType}</span>
+                      </div>
+                    </div>
+                    <p className="text-lg text-off-white font-semibold mb-2">{exp.role}</p>
+                    <p className="text-text-secondary leading-relaxed text-sm">{exp.description}</p>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <span className="block text-sm text-gray-300 font-medium">{exp.period}</span>
-                  <span className="block text-sm text-gray-500">🕒 {exp.employmentType}</span>
-                </div>
-              </div>
-
-              <p className="text-lg text-white/90 font-semibold mb-2">{exp.role}</p>
-              <p className="text-gray-400 leading-relaxed">{exp.description}</p>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
       </motion.div>
     </div>

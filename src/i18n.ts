@@ -81,6 +81,9 @@ i18next.init({
           alternativeContact: "También puedes contactarme directamente:",
           email: "ivanbelasich@gmail.com",
           linkedin: "LinkedIn"
+        },
+        footer: {
+          copyright: "© {{year}} {{name}}. Todos los derechos reservados."
         }
       }
     },
@@ -161,6 +164,9 @@ i18next.init({
           alternativeContact: "You can also contact me directly:",
           email: "ivanbelasich@gmail.com",
           linkedin: "LinkedIn"
+        },
+        footer: {
+          copyright: "© {{year}} {{name}}. All rights reserved."
         }
       }
     }

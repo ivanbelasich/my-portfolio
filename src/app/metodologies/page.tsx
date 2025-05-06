@@ -47,13 +47,13 @@ export default function WorkMethodologies() {
 
     return (
         <div className="container mx-auto px-4 py-16">
-            <h3 className="text-4xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+            <h3 className="text-4xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-slate-200">
                 {i18next.language === 'es'
                     ? "Metodologías de Trabajo"
                     : "Work Methodologies"}
             </h3>
 
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 border border-gray-700 shadow-2xl">
+            <div className="bg-gradient-to-br from-slate-900/80 to-sky-500/70 rounded-2xl p-8 border border-sky-500/30 shadow-2xl">
                 <div className="grid md:grid-cols-2 gap-6">
                     {workMethodologies.map((methodology, idx) => (
                         <motion.div
@@ -70,13 +70,13 @@ export default function WorkMethodologies() {
                                 scale: 1.02,
                                 transition: { duration: 0.2 }
                             }}
-                            className="bg-gray-700/50 rounded-xl p-6 border border-gray-600/50 hover:border-blue-500/50 "
+                            className="bg-slate-900/50 rounded-xl p-6 border border-sky-500/30 hover:border-sky-500/50 "
                         >
                             <div className="flex items-center mb-4">
-                                <span className="text-3xl mr-4">{methodology.icon}</span>
-                                <h4 className="text-xl font-semibold text-blue-400">{methodology.title}</h4>
+                                <span className="text-3xl mr-4 text-sky-500">{methodology.icon}</span>
+                                <h4 className="text-xl font-semibold text-sky-500">{methodology.title}</h4>
                             </div>
-                            <p className="text-gray-300 text-sm leading-relaxed">
+                            <p className="text-slate-400 text-sm leading-relaxed">
                                 {methodology.description}
                             </p>
                         </motion.div>
