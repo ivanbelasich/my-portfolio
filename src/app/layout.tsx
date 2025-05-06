@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react"
-import "./globals.css";
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Portfolio | Ivan Belasich",
-  description: "Portfolio of Ivan Belasich",
+  description: "Portfolio of Ivan Belasich"
 };
 
 export default function RootLayout({
