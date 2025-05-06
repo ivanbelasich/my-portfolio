@@ -19,7 +19,7 @@ const fontSpaceGrotesk = Space_Grotesk({
 })
 
 export default function Home() {
-  const [language, setLanguage] = useState(i18next.language)
+  const [, setLanguage] = useState(i18next.language)
   const [isVisible, setIsVisible] = useState(false)
   const ref = useRef(null)
 
